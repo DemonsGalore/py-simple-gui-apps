@@ -6,7 +6,7 @@ def update_figure(data):
     axes = fig.axes
     x = [i[0] for i in data]
     y = [int(i[1]) for i in data]
-    axes[0].plot(x, y, 'g*')
+    axes[0].plot(x, y, 'r-')
     figure_canvas_agg.draw()
     figure_canvas_agg.get_tk_widget().pack()
 
