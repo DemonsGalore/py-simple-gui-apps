@@ -4,6 +4,8 @@ from pytube import YouTube
 from PIL import Image
 from urllib import request
 
+thumbnail_size = (480, 360)
+
 def progress_check(stream, chunk, bytes_remaining):
     progress_amount = 100 - round(bytes_remaining / stream.filesize * 100)
     window['-PROGRESSBAR-'].update(progress_amount)
@@ -19,7 +21,7 @@ def create_thumbnail(url):
     image = Image.open(BytesIO(data))
     bio = BytesIO()
 
-    image = image.resize((500, 300), Image.ANTIALIAS)
+    image.thumbnail(thumbnail_size, Image.ANTIALIAS)
     image.save(bio, format = 'PNG')
 
     window['-THUMBNAIL-'].update(data = bio.getvalue())
@@ -41,7 +43,7 @@ info_tab = [
         sg.Text('Description:'),
         sg.Multiline('', key = '-DESCRIPTION-', size = (40, 20), no_scrollbar = True, disabled = True, expand_x = True)
     ],
-    [sg.Image('', key = '-THUMBNAIL-', size = (500, 300))]
+    [sg.Push(), sg.Image('', key = '-THUMBNAIL-', size = thumbnail_size), sg.Push()]
 ]
 
 download_tab = [
